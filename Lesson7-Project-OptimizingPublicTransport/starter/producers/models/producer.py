@@ -9,6 +9,9 @@ from confluent_kafka.avro import AvroProducer
 
 logger = logging.getLogger(__name__)
 
+SCHEMA_REGISTRY_URL = "http://schema-registry:8081/"
+BROKER_URL = "PLAINTEXT://localhost:9092,PLAINTEXT://localhost:9093,PLAINTEXT://localhost:9094"
+
 
 class Producer:
     """Defines and provides common functionality amongst Producers"""
@@ -38,6 +41,7 @@ class Producer:
         #
         #
         self.broker_properties = {
+            "bootstrap.servers": BROKER_URL,
             # TODO
             # TODO
             # TODO
@@ -49,8 +53,10 @@ class Producer:
             Producer.existing_topics.add(self.topic_name)
 
         # TODO: Configure the AvroProducer
-        # self.producer = AvroProducer(
-        # )
+        self.producer = AvroProducer(
+                self.broker_properties,
+                schema_registry=SCHEMA_REGISTRY_URL
+            )
 
     def create_topic(self):
         """Creates the producer topic if it does not already exist"""
@@ -60,7 +66,27 @@ class Producer:
         # the Kafka Broker.
         #
         #
-        logger.info("topic creation kafka integration incomplete - skipping")
+        client = AdminClient()
+        if not self.topic_exists(client, self.topic_name):
+            new_topic = NewTopic(
+                            self.topic_name,
+                            num_partitions=self.num_partitions,
+                            replication_factor=self.num_replicas
+                        )
+            futures = client.create_topics([
+                    new_topic
+                ])
+            for topic, future in futures.items():
+                try:
+                    future.result()
+                    print("topic created")
+                except Exception as e:
+                    logger.error("topic creation failed", e)
+                    raise
+
+    def topic_exists(self, client, topic_name):
+        topic_metadata = client.list_topics(timeout=5)
+        return topic_name in set(t.topic for t in iter(topic_metadata.topics.values()))
 
     def time_millis(self):
         return int(round(time.time() * 1000))
