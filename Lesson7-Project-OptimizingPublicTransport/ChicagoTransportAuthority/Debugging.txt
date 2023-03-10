@@ -1,0 +1,119 @@
+kafka-topics --list --zookeeper localhost:2181
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~This is all simulation.py~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+All stations data is in 'JSON' format
+root@b3bc5cb6e61f:/home/workspace# kafka-console-consumer --bootstrap-server localhost:9092 --topic org.chicago.cta.v3.stations --from-beginning --max-messages 10
+{"stop_id":30001,"direction_id":"E","stop_name":"Austin (O'Hare-bound)","station_name":"Austin","station_descriptive_name":"Austin (Blue Line)","station_id":40010,"order":29,"red":false,"blue":true,"green":false}
+{"stop_id":30002,"direction_id":"W","stop_name":"Austin (Forest Pk-bound)","station_name":"Austin","station_descriptive_name":"Austin (Blue Line)","station_id":40010,"order":29,"red":false,"blue":true,"green":false}
+{"stop_id":30003,"direction_id":"E","stop_name":"Harlem (63rd-bound)","station_name":"Harlem/Lake","station_descriptive_name":"Harlem/Lake (Green Line)","station_id":40020,"order":0,"red":false,"blue":false,"green":true}
+{"stop_id":30004,"direction_id":"W","stop_name":"Harlem (Terminal arrival)","station_name":"Harlem/Lake","station_descriptive_name":"Harlem/Lake (Green Line)","station_id":40020,"order":0,"red":false,"blue":false,"green":true}
+{"stop_id":30005,"direction_id":"E","stop_name":"Pulaski (63rd-bound)","station_name":"Pulaski","station_descriptive_name":"Pulaski (Green Line)","station_id":40030,"order":7,"red":false,"blue":false,"green":true}
+{"stop_id":30006,"direction_id":"W","stop_name":"Pulaski (Harlem-bound)","station_name":"Pulaski","station_descriptive_name":"Pulaski (Green Line)","station_id":40030,"order":7,"red":false,"blue":false,"green":true}
+{"stop_id":30009,"direction_id":"W","stop_name":"Cicero (Harlem-bound)","station_name":"Cicero","station_descriptive_name":"Cicero (Green Line)","station_id":40480,"order":6,"red":false,"blue":false,"green":true}
+{"stop_id":30012,"direction_id":"N","stop_name":"Belmont (O'Hare Branch) (O'Hare-bound)","station_name":"Belmont","station_descriptive_name":"Belmont (Blue Line)","station_id":40060,"order":8,"red":false,"blue":true,"green":false}
+{"stop_id":30013,"direction_id":"S","stop_name":"Belmont (O'Hare Branch) (Forest Pk-bound)","station_name":"Belmont","station_descriptive_name":"Belmont (Blue Line)","station_id":40060,"order":8,"red":false,"blue":true,"green":false}
+{"stop_id":30014,"direction_id":"N","stop_name":"Jackson/Dearborn (O'Hare-bound)","station_name":"Jackson","station_descriptive_name":"Jackson (Blue Line)","station_id":40070,"order":19,"red":false,"blue":true,"green":false}
+Processed a total of 10 messages
+
+Arrival data is coming in 'AVRO' format
+root@d310ac105616:/home/workspace# kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic org.chicago.cta.arrival.washington_and_wabash.v3 --from-beginning --max-messages 10
+{"station_id":41700,"train_id":"GL003","direction":"b","line":"green","train_status":"in_service","prev_station_id":{"int":40260},"prev_direction":{"string":"b"}}
+{"station_id":41700,"train_id":"GL007","direction":"a","line":"green","train_status":"in_service","prev_station_id":{"int":40680},"prev_direction":{"string":"a"}}
+{"station_id":41700,"train_id":"GL002","direction":"b","line":"green","train_status":"in_service","prev_station_id":{"int":40260},"prev_direction":{"string":"b"}}
+{"station_id":41700,"train_id":"GL006","direction":"a","line":"green","train_status":"in_service","prev_station_id":{"int":40680},"prev_direction":{"string":"a"}}
+{"station_id":41700,"train_id":"GL001","direction":"b","line":"green","train_status":"in_service","prev_station_id":{"int":40260},"prev_direction":{"string":"b"}}
+{"station_id":41700,"train_id":"GL005","direction":"a","line":"green","train_status":"in_service","prev_station_id":{"int":40680},"prev_direction":{"string":"a"}}
+{"station_id":41700,"train_id":"GL000","direction":"b","line":"green","train_status":"in_service","prev_station_id":{"int":40260},"prev_direction":{"string":"b"}}
+{"station_id":41700,"train_id":"GL004","direction":"a","line":"green","train_status":"in_service","prev_station_id":{"int":40680},"prev_direction":{"string":"a"}}
+{"station_id":41700,"train_id":"GL003","direction":"a","line":"green","train_status":"in_service","prev_station_id":{"int":40680},"prev_direction":{"string":"a"}}
+{"station_id":41700,"train_id":"GL009","direction":"b","line":"green","train_status":"in_service","prev_station_id":{"int":40260},"prev_direction":{"string":"b"}}
+Processed a total of 10 messages
+
+Weather data is coming in 'AVRO' format
+root@d310ac105616:/home/workspace# kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic org.chicago.cta.weather.v3 --from-beginning --max-messages 10
+{"temperature":47.92709,"status":"windy"}
+{"temperature":39.249355,"status":"partly_cloudy"}
+{"temperature":43.23407,"status":"cloudy"}
+{"temperature":44.516636,"status":"partly_cloudy"}
+{"temperature":46.93927,"status":"windy"}
+{"temperature":56.23894,"status":"cloudy"}
+
+Turnstile data is coming in 'AVRO' format
+root@b3bc5cb6e61f:/home/workspace# kafka-avro-console-consumer --bootstrap-server localhost:9092 --topic org.chicago.cta.turnstile.v3 --from-beginning --max-messages 10
+{"station_id":40890,"station_name":"O'Hare","line":"blue"}
+{"station_id":40890,"station_name":"O'Hare","line":"blue"}
+{"station_id":40820,"station_name":"Rosemont","line":"blue"}
+{"station_id":40820,"station_name":"Rosemont","line":"blue"}
+{"station_id":40570,"station_name":"California","line":"blue"}
+{"station_id":40570,"station_name":"California","line":"blue"}
+{"station_id":40670,"station_name":"Western/O'Hare Branch","line":"blue"}
+{"station_id":40590,"station_name":"Damen","line":"blue"}
+{"station_id":40590,"station_name":"Damen","line":"blue"}
+{"station_id":40590,"station_name":"Damen","line":"blue"}
+Processed a total of 10 messages
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Faust is building a trimmed version of 
+stations data. Since faust cannot 
+process AVRO hence the all_stations data
+was in JSON and also why the output of
+ transformedstation data is in JSON
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+root@d310ac105616:/home/workspace# kafka-console-consumer --bootstrap-server localhost:9092 --topic org.chicago.cta.stations.transformed.v3 --from-beginning --max-messages 10
+{"station_id": 40010, "station_name": "Austin", "order": 29, "line": "blue", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40010, "station_name": "Austin", "order": 29, "line": "blue", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40010, "station_name": "Austin", "order": 29, "line": "blue", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40010, "station_name": "Austin", "order": 29, "line": "blue", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40020, "station_name": "Harlem/Lake", "order": 0, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40020, "station_name": "Harlem/Lake", "order": 0, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40020, "station_name": "Harlem/Lake", "order": 0, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40020, "station_name": "Harlem/Lake", "order": 0, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40030, "station_name": "Pulaski", "order": 7, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40030, "station_name": "Pulaski", "order": 7, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+Processed a total of 10 messages
+
+We are also keeping a faust table which has latest entries org.chicago.cta.station.table.v3
+root@c319c24926fe:/home/workspace# kafka-console-consumer --bootstrap-server localhost:9092 --topic org.chicago.cta.station.table.v3 --from-beginning --max-messages 10
+{"station_id": 40010, "station_name": "Austin", "order": 29, "line": "blue", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40010, "station_name": "Austin", "order": 29, "line": "blue", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40020, "station_name": "Harlem/Lake", "order": 0, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40020, "station_name": "Harlem/Lake", "order": 0, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40030, "station_name": "Pulaski", "order": 7, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40030, "station_name": "Pulaski", "order": 7, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40480, "station_name": "Cicero", "order": 6, "line": "green", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40060, "station_name": "Belmont", "order": 8, "line": "blue", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40060, "station_name": "Belmont", "order": 8, "line": "blue", "__faust": {"ns": "faust_stream.TransformedStation"}}
+{"station_id": 40070, "station_name": "Jackson", "order": 19, "line": "blue", "__faust": {"ns": "faust_stream.TransformedStation"}}
+Processed a total of 10 messages
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~ KSQL Data ~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ksql> SELECT * FROM TURNSTILE_SUMMARY;
+1678382487985 | 40290 | 40290 | 6
+1678382487985 | 40300 | 40300 | 18
+
+TURNSTILE_SUMMARY Data is in 'JSON' format
+root@c319c24926fe:/home/workspace# kafka-console-consumer --bootstrap-server localhost:9092 --topic TURNSTILE_SUMMARY --from-beginning --max-messages 10
+{"STATION_ID":40370,"COUNT":1}
+{"STATION_ID":40880,"COUNT":5}
+{"STATION_ID":40220,"COUNT":6}
+{"STATION_ID":40250,"COUNT":3}
+{"STATION_ID":40330,"COUNT":7}
+{"STATION_ID":40170,"COUNT":5}
+{"STATION_ID":40020,"COUNT":4}
+{"STATION_ID":40030,"COUNT":10}
+{"STATION_ID":41700,"COUNT":10}
+{"STATION_ID":40970,"COUNT":11}
+Processed a total of 10 messages
+
+
